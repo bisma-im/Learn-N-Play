@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "517068518333",
+    "project_id": "learnnplayauth",
+    "storage_bucket": "learnnplayauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517068518333:android:c0ea6f1741f9d2df10d8d4",
+        "android_client_info": {
+          "package_name": "com.example.learnnplay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5AyHS11AMP-n8Lbj1UPtqKjBZ3F3buUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
