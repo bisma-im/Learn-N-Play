@@ -1,5 +1,4 @@
 package com.example.learnnplay;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
-
 public class ChildProfiles extends AppCompatActivity {
     MyDBHelper dbHelper = new MyDBHelper(this);
     ListView listView;
@@ -26,7 +24,6 @@ public class ChildProfiles extends AppCompatActivity {
         addChild= findViewById(R.id.addProfile);
         ArrayAdapter<String> adp = new ArrayAdapter<>(this, R.layout.row_view, R.id.textView9, childrenList);
         listView.setAdapter(adp);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -36,7 +33,6 @@ public class ChildProfiles extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         addChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
