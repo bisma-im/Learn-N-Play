@@ -13,7 +13,7 @@ public class HomeScreen extends AppCompatActivity {
     private Button appsettingbtn;
     private  Button quizbutton;
     private  Button alpha;
-    private Button numberbtn;
+    private Button numberbtn, imageRecog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +28,14 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeScreen.this, AdditionActivity.class));
+                finish();
+            }
+        });
+
+        imageRecog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeScreen.this, ImageRecognitionActivity.class));
                 finish();
             }
         });
