@@ -23,6 +23,7 @@ public class HomeScreen extends AppCompatActivity {
         appsettingbtn=findViewById(R.id.appsettingbtn);
         quizbutton=findViewById(R.id.quizbutton);
         alpha=findViewById(R.id.buttonAlphabet);
+        imageRecog = findViewById(R.id.buttonImageRecognition);
         numberbtn=findViewById(R.id.buttonNumber);
         numberbtn.setOnClickListener(new View.OnClickListener() {
             @Override

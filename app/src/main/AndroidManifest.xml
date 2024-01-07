@@ -64,6 +64,9 @@
             android:name=".AppSetting"
             android:exported="false" />
         <activity
+            android:name=".ImageRecognitionActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="true">
             <intent-filter>
