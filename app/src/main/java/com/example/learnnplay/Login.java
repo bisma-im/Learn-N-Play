@@ -70,6 +70,8 @@ public class Login extends AppCompatActivity {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
                                 sendUserToNextActivity();
+                                getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                                        .putBoolean("isLoggedIn", true).apply();
                                 Toast.makeText(Login.this, "Sign In Successful", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(Login.this, "Incorrect Email/Password: " + task.getException(), Toast.LENGTH_SHORT).show();

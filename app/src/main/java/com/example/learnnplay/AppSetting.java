@@ -32,6 +32,8 @@ public class AppSetting extends AppCompatActivity {
              @Override
              public void onClick(View v) {
                  startActivity(new Intent(AppSetting.this, Login.class));
+                 getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                         .putBoolean("isLoggedIn", false).apply();
              }
          });
         progressButton.setOnClickListener(new View.OnClickListener() {

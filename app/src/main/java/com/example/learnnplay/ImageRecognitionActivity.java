@@ -58,7 +58,9 @@ public class ImageRecognitionActivity extends AppCompatActivity {
         resultTv = findViewById(R.id.resultTextView);
         upload = findViewById(R.id.uploadButton);
         camera = findViewById(R.id.cameraButton);
-        labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
+        labeler = ImageLabeling.getClient(new ImageLabelerOptions.Builder()
+                .setConfidenceThreshold(0.7f) // Set your own threshold
+                .build());
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

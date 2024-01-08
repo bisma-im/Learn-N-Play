@@ -24,10 +24,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                .getBoolean("isFirstRun", true);
+        boolean isLoggedIn = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isLoggedIn", false);
 
-        if (!isFirstRun) {
+        if (isLoggedIn) {
             startActivity(new Intent(RegisterActivity.this, HomeScreen.class));
             finish();
             return;
@@ -87,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                             sendUserToNextActivity();
                             Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                             getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                                    .putBoolean("isFirstRun", false).apply();
+                                    .putBoolean("isLoggedIn", true).apply();
                         } else {
                             Toast.makeText(RegisterActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
                         }
