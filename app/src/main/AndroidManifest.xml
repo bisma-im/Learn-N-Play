@@ -57,7 +57,7 @@
             android:exported="false" />
         <activity
             android:name=".CreateChildProfileActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".QuizActivity"
             android:exported="false" />

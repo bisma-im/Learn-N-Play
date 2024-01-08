@@ -1,7 +1,8 @@
 package com.example.learnnplay;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -14,30 +15,33 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.widget.Button;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class QuizActivity extends AppCompatActivity {
+
     private ImageView questionImageView;
     private TextView timerTextView;
     private RadioGroup radioGroup;
     private Button submitButton;
     private Button restartButton;
     private TextView scoreTextView;
-    MyDBHelper dbHelper;
+
     private String[] questions = {"question1", "question2", "question3", "question4", "question5"};
     private int[] questionImages = {R.drawable.hexagon, R.drawable.yellow, R.drawable.number1, R.drawable.a, R.drawable.shape_triangle};
     private String[] correctAnswers = {"HexaGon", "yellow Color", "11", "Apple", "Triangle"};
-    private String[] options={"cat","none"};
+    private String[] options = {"cat", "none"};
     private int currentQuestionIndex = 0;
     private int score = 0;
     private Button backButton;
-
 
     private CountDownTimer timer;
     private long timeLeftInMillis = 20000; // 20 seconds
 
     private MediaPlayer mediaPlayer;
-    String childName;
+    private String childName;
+
+    private FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +56,11 @@ public class QuizActivity extends AppCompatActivity {
         scoreTextView = findViewById(R.id.scoreTextView);
         backButton = findViewById(R.id.backbutton);
 
-        dbHelper = new MyDBHelper(this);
+
+        firestore = FirebaseFirestore.getInstance();
+
         childName = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                .getString("childName",null);
+                .getString("childName", null);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +68,7 @@ public class QuizActivity extends AppCompatActivity {
                 startActivity(new Intent(QuizActivity.this, HomeScreen.class));
             }
         });
+
         // Initialize MediaPlayer
         mediaPlayer = MediaPlayer.create(this, R.raw.quiz_start_audio);
 
@@ -136,12 +143,28 @@ public class QuizActivity extends AppCompatActivity {
 
         String resultMessage = "Your score is: " + score + " out of " + questions.length;
         Toast.makeText(this, resultMessage, Toast.LENGTH_LONG).show();
+
+        // Update the score in Firestore
         if (childName != null) {
-            dbHelper.updateScore(childName, score);
+            updateScoreInFirestore(childName, score);
         }
 
         // Show restart button
         restartButton.setVisibility(View.VISIBLE);
+    }
+
+    private void updateScoreInFirestore(String childName, int newScore) {
+        DocumentReference childProfileRef = firestore.collection("childProfiles").document(childName);
+
+        childProfileRef.update("score", newScore)
+                .addOnSuccessListener(aVoid -> {
+                    // Handle success if needed
+                    // Log.d("Firestore", "Score updated successfully");
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure if needed
+                    // Log.e("Firestore", "Error updating score", e);
+                });
     }
 
     private void restartQuiz() {

@@ -1,11 +1,11 @@
 package com.example.learnnplay;
 
-public class ChildUser {
+public class ChildDTO {
     String name;
     int age;
     int score;
 
-    public ChildUser(String name, int age, int score) {
+    public ChildDTO(String name, int age, int score) {
         this.name = name;
         this.age = age;
         this.score = score;

@@ -10,16 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CreateChildProfileActivity extends AppCompatActivity {
 
-    List<ChildUser> childUsers = new ArrayList<>();
     EditText name, age;
     Button register;
     public String currentChildName;
-    MyDBHelper dbHelper;
+    private FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +27,9 @@ public class CreateChildProfileActivity extends AppCompatActivity {
         name = findViewById(R.id.editName);
         age = findViewById(R.id.editAge);
         register = findViewById(R.id.register);
-        dbHelper = new MyDBHelper(this);
+
+        // Initialize Firebase Firestore
+        firestore = FirebaseFirestore.getInstance();
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,22 +37,39 @@ public class CreateChildProfileActivity extends AppCompatActivity {
                 currentChildName = name.getText().toString();
 
                 if (currentChildName.isEmpty() || age.getText().toString().isEmpty()) {
-                    Toast.makeText(CreateChildProfileActivity.this,"Enter all fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateChildProfileActivity.this, "Enter all fields", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 try {
                     int childAge = Integer.parseInt(age.getText().toString());
-                    ChildUser childUser = new ChildUser(name.getText().toString(), childAge, 0);
-                    childUsers.add(childUser);
-                    dbHelper.addChild(name.getText().toString(), childAge);
 
+                    // Create a ChildDTO object
+                    ChildDTO childDTO = new ChildDTO(currentChildName, childAge, 0);
+
+                    // Save the child profile to Firestore
+                    saveChildProfileToFirestore(childDTO);
+
+                    // Redirect to ChildProfiles activity
                     Intent intent = new Intent(CreateChildProfileActivity.this, ChildProfiles.class);
                     startActivity(intent);
+
                 } catch (NumberFormatException e) {
-                    return;
+                    Toast.makeText(CreateChildProfileActivity.this, "Invalid age format", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
 
+    private void saveChildProfileToFirestore(ChildDTO childDTO) {
+        // Ensure the document ID is unique and does not contain spaces
+        String sanitizedChildName = currentChildName.replaceAll("\\s", "_");
+
+        // Add the child profile to Firestore
+        firestore.collection("childProfiles")
+                .document(sanitizedChildName)
+                .set(childDTO)
+                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Child profile added successfully"))
+                .addOnFailureListener(e -> Log.e("Firestore", "Error adding child profile", e));
     }
 }
