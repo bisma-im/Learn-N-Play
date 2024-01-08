@@ -24,8 +24,17 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        inputemail = findViewById(R.id.editEmail);
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
+
+        if (!isFirstRun) {
+            Intent intent = new Intent(RegisterActivity.this, HomeScreen.class);
+            startActivity(intent);
+            finish();  // Finish the activity to prevent it from being opened again
+        } else {
+            setContentView(R.layout.activity_register);  // Set content view after checking isFirstRun
+        }
+            inputemail = findViewById(R.id.editEmail);
         Password = findViewById(R.id.editPassword);
         register = findViewById(R.id.register);
         cnfrmpassword = findViewById(R.id.confirmPass);
@@ -34,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
              @Override
              public void onClick(View v) {
                  startActivity(new Intent(RegisterActivity.this, Login.class));
+                 finish();
              }
          });
 
@@ -45,6 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
                 PerAuth();
             }
         });
+        //   Update isFirstRun to false after registration
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", false).apply();
+        finish();  // Finish the activity to prevent it from being opened again
     }
     public void PerAuth() {
         String email = inputemail.getText().toString();
