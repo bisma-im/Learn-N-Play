@@ -53,9 +53,9 @@ public class Login extends AppCompatActivity {
         String password = inputPassword.getText().toString();
 
         if (!email.matches(emailPattern)) {
-            inputEmail.setError("Enter Correct Email");
+            inputEmail.setError("Invalid Email Address");
         } else if (password.isEmpty() || password.length() < 6) {
-            inputPassword.setError("Enter Proper Password");
+            inputPassword.setError("Invalid Password");
         } else {
             ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Please wait, signing in...");

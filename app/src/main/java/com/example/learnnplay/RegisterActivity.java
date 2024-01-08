@@ -7,93 +7,97 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-public class RegisterActivity extends AppCompatActivity {
-    EditText inputemail, Password, cnfrmpassword;
-    Button register,login;
 
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser mUser = mAuth.getCurrentUser();
+public class RegisterActivity extends AppCompatActivity {
+    private EditText inputEmail, inputPassword, confirmPassword;
+    private Button registerButton, loginButton;
+
+    private final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+
+        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
 
         if (!isFirstRun) {
-            Intent intent = new Intent(RegisterActivity.this, HomeScreen.class);
-            startActivity(intent);
-            finish();  // Finish the activity to prevent it from being opened again
-        } else {
-            setContentView(R.layout.activity_register);  // Set content view after checking isFirstRun
+            startActivity(new Intent(RegisterActivity.this, HomeScreen.class));
+            finish();
+            return;
         }
-            inputemail = findViewById(R.id.editEmail);
-        Password = findViewById(R.id.editPassword);
-        register = findViewById(R.id.register);
-        cnfrmpassword = findViewById(R.id.confirmPass);
-         login=findViewById(R.id.loginbtn);
-         login.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 startActivity(new Intent(RegisterActivity.this, Login.class));
-                 finish();
-             }
-         });
 
+        setContentView(R.layout.activity_register);
 
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        register.setOnClickListener(new View.OnClickListener() {
+        inputEmail = findViewById(R.id.editEmail);
+        inputPassword = findViewById(R.id.editPassword);
+        registerButton = findViewById(R.id.register);
+        confirmPassword = findViewById(R.id.confirmPass);
+        loginButton = findViewById(R.id.loginbtn);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PerAuth();
+                startActivity(new Intent(RegisterActivity.this, Login.class));
+                finish();
             }
         });
-        //   Update isFirstRun to false after registration
-        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                .putBoolean("isFirstRun", false).apply();
-        finish();  // Finish the activity to prevent it from being opened again
+
+        registerButton.setOnClickListener(v -> performAuth());
     }
-    public void PerAuth() {
-        String email = inputemail.getText().toString();
-        String password = Password.getText().toString();
-        String cnfrmpass = cnfrmpassword.getText().toString();
+
+    private void performAuth() {
+        String email = inputEmail.getText().toString();
+        String password = inputPassword.getText().toString();
+        String cnfrmPass = confirmPassword.getText().toString();
+
         if (!email.matches(emailPattern)) {
-            inputemail.setError("Enter Correct Email");
-        } else if (password.isEmpty() || password.length() < 6) {
-            Password.setError("Enter Proper Password");
-        } else if (!password.equals(cnfrmpass)) {
-            cnfrmpassword.setError("Password does not match");
-        } else {
-            ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("Please wait, registering...");
-            progressDialog.setTitle("Registration");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        progressDialog.dismiss();
-                        sendUserToNextActivity();
-                        Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                    } else {
-                        progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            inputEmail.setError("Enter Correct Email");
+            return;
         }
+
+        if (password.isEmpty() || password.length() < 6) {
+            inputPassword.setError("Enter Proper Password");
+            return;
+        }
+
+        if (!password.equals(cnfrmPass)) {
+            confirmPassword.setError("Password does not match");
+            return;
+        }
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait, registering...");
+        progressDialog.setTitle("Registration");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
+                        if (task.isSuccessful()) {
+                            sendUserToNextActivity();
+                            Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                                    .putBoolean("isFirstRun", false).apply();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
+
     private void sendUserToNextActivity() {
-        Intent intent = new Intent(RegisterActivity.this, Login.class);
+        Intent intent = new Intent(RegisterActivity.this, HomeScreen.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-}
+    }
 }
