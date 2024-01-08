@@ -15,6 +15,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class AppSetting extends AppCompatActivity {
     private Button backButton, progressButton,logout;
     private AirplaneModeReceiver receiver;
@@ -31,11 +34,13 @@ public class AppSetting extends AppCompatActivity {
          logout.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
+                 FirebaseAuth.getInstance().signOut();
                  startActivity(new Intent(AppSetting.this, Login.class));
                  getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                          .putBoolean("isLoggedIn", false).apply();
              }
          });
+
         progressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
