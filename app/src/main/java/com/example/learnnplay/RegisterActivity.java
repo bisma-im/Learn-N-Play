@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -15,7 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 public class RegisterActivity extends AppCompatActivity {
     EditText inputemail, Password, cnfrmpassword;
-    Button register;
+    Button register,login;
+
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser mUser = mAuth.getCurrentUser();
@@ -27,6 +29,15 @@ public class RegisterActivity extends AppCompatActivity {
         Password = findViewById(R.id.editPassword);
         register = findViewById(R.id.register);
         cnfrmpassword = findViewById(R.id.confirmPass);
+         login=findViewById(R.id.loginbtn);
+         login.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 startActivity(new Intent(RegisterActivity.this, Login.class));
+             }
+         });
+
+
         ProgressDialog progressDialog = new ProgressDialog(this);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
     private void sendUserToNextActivity() {
-        Intent intent = new Intent(RegisterActivity.this, HomeScreen.class);
+        Intent intent = new Intent(RegisterActivity.this, Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 }

@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
     EditText inputEmail, inputPassword;
-    Button signIn;
+    Button signIn,registerbtn;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     FirebaseAuth mAuth;
 
@@ -31,9 +31,14 @@ public class Login extends AppCompatActivity {
         inputEmail = findViewById(R.id.editEmail);
         inputPassword = findViewById(R.id.Password);
         signIn = findViewById(R.id.Login);
-
+        registerbtn=findViewById(R.id.registerbtn);
         ProgressDialog progressDialog = new ProgressDialog(this);
-
+      registerbtn.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              startActivity(new Intent(Login.this,RegisterActivity.class));
+          }
+      });
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

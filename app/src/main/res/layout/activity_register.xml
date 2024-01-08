@@ -34,33 +34,35 @@
             android:id="@+id/editEmail"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@color/white"
             android:layout_margin="10dp"
+            android:background="@color/white"
+            android:hint="Email"
             android:inputType="text"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:hint="Email" />
+            android:paddingRight="10dp" />
 
         <EditText
             android:id="@+id/editPassword"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@color/white"
             android:layout_margin="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:background="@color/white"
+            android:hint="Password"
             android:inputType="text"
-            android:hint="Password" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
         <EditText
             android:id="@+id/confirmPass"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@color/white"
             android:layout_margin="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:background="@color/white"
+            android:hint="ConfirmPassword"
             android:inputType="text"
-            android:hint="ConfirmPassword" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
         <Button
             android:id="@+id/register"
             android:layout_width="150dp"
@@ -72,6 +74,25 @@
             android:text="Register"
             android:textColor="@color/secondary_theme" />
 
+        <TextView
+            android:id="@+id/textlogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Already account?"
+            android:textAlignment="center"
+            android:textColor="#FD3C42"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/loginbtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
+            android:backgroundTint="#FFAB00"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="Login"
+            android:textColor="@color/secondary_theme" />
     </LinearLayout>
 
 </LinearLayout>

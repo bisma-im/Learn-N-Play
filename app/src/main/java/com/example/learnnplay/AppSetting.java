@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 
 public class AppSetting extends AppCompatActivity {
-    private Button backButton, progressButton;
+    private Button backButton, progressButton,logout;
     private AirplaneModeReceiver receiver;
 
     private static final int ACTION_MANAGE_WRITE_SETTINGS_PERMISSION_REQUEST_CODE = 1;
@@ -25,10 +25,15 @@ public class AppSetting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_setting);
-
+         logout=findViewById(R.id.logoutbtn);
         backButton = findViewById(R.id.backbutton);
         progressButton = findViewById(R.id.buttonProgress);
-
+         logout.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 startActivity(new Intent(AppSetting.this, Login.class));
+             }
+         });
         progressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
