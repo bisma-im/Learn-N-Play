@@ -15,22 +15,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonImageRecognition"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="60dp"
         android:backgroundTint="#FFAB00"
         android:fontFamily="@font/alfa_slab_one"
-        android:text="Give Quiz"
+        android:text="Take a Quiz"
         android:textAllCaps="true"
         android:textColor="#fe3c42"
         android:textColorHint="#1B1A1A"
         android:textColorLink="#6D0F0F"
         android:textSize="20sp"
         app:icon="@android:drawable/ic_popup_reminder"
-        app:iconSize="50dp"
+        app:iconSize="30dp"
         app:iconTint="#fe3c42" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="117dp"
         android:layout_alignParentTop="true"
@@ -52,8 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="50dp"
-
+        android:layout_marginTop="30dp"
         android:layout_marginRight="60dp"
         android:backgroundTint="#FFAB00"
         android:fontFamily="@font/alfa_slab_one"
@@ -64,7 +63,7 @@
         android:textColorLink="#6D0F0F"
         android:textSize="20sp"
         app:icon="@android:drawable/ic_menu_sort_alphabetically"
-        app:iconSize="50dp"
+        app:iconSize="40dp"
         app:iconTint="#fe3c42" />
 
     <Button
@@ -73,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonAlphabet"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="60dp"
         android:backgroundTint="#FFAB00"
         android:fontFamily="@font/alfa_slab_one"
@@ -85,7 +84,7 @@
         android:textColorLink="#6D0F0F"
         android:textSize="20sp"
         app:icon="@android:drawable/btn_star_big_on"
-        app:iconSize="50dp"
+        app:iconSize="40dp"
         app:iconTint="#fe3c42" />
 
     <Button
@@ -94,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonShape"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="60dp"
         android:backgroundTint="#FFAB00"
         android:fontFamily="@font/alfa_slab_one"
@@ -105,7 +104,7 @@
         android:textColorLink="#6D0F0F"
         android:textSize="20sp"
         app:icon="@android:drawable/ic_menu_edit"
-        app:iconSize="50dp"
+        app:iconSize="40dp"
         app:iconTint="#fe3c42" />
 
     <Button
@@ -114,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonColor"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="60dp"
         android:backgroundTint="#FFAB00"
         android:fontFamily="@font/alfa_slab_one"
@@ -125,7 +124,7 @@
         android:textColorLink="#6D0F0F"
         android:textSize="20sp"
         app:icon="@android:drawable/ic_menu_day"
-        app:iconSize="50dp"
+        app:iconSize="40dp"
         app:iconTint="#fe3c42" />
 
     <Button
@@ -134,7 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonNumber"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="60dp"
         android:backgroundTint="#FFAB00"
         android:fontFamily="@font/alfa_slab_one"
@@ -144,14 +143,14 @@
         android:textColorHint="#1B1A1A"
         android:textColorLink="#6D0F0F"
         android:textSize="20sp"
-        app:icon="@android:drawable/ic_menu_day"
-        app:iconSize="50dp"
+        app:icon="@android:drawable/ic_menu_report_image"
+        app:iconSize="40dp"
         app:iconTint="#fe3c42" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="233dp"
-        android:layout_height="88dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
         android:backgroundTint="#FFD600"
@@ -162,7 +161,7 @@
         android:textAllCaps="true"
         android:textColor="#fe3c42"
         android:textColorHighlight="#473C02"
-        android:textSize="34sp" />
+        android:textSize="30sp" />
 
 
 

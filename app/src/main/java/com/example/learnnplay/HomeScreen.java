@@ -13,7 +13,7 @@ public class HomeScreen extends AppCompatActivity {
     private Button appsettingbtn;
     private  Button quizbutton;
     private  Button alpha;
-    private Button numberbtn, imageRecog;
+    private Button numberbtn, imageRecog, back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +24,17 @@ public class HomeScreen extends AppCompatActivity {
         quizbutton=findViewById(R.id.quizbutton);
         alpha=findViewById(R.id.buttonAlphabet);
         imageRecog = findViewById(R.id.buttonImageRecognition);
+        back = findViewById(R.id.back);
         numberbtn=findViewById(R.id.buttonNumber);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeScreen.this, ChildProfiles.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         numberbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

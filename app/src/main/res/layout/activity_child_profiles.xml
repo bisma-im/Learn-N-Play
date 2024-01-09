@@ -4,54 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/theme"
+    android:orientation="vertical"
     tools:context=".ChildProfiles">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="71dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#00FBFBFB"
-            app:icon="@android:drawable/ic_menu_revert"
-            android:contentDescription="back button"
-            android:layout_weight="0.1"
-            app:iconPadding="50dp"
-            app:iconSize="40dp"
-            app:iconTint="@color/secondary_theme"
-            app:iconTintMode="multiply" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_weight="0.7"
-            android:layout_width="302dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#FFD600"
-            android:fontFamily="@font/alfa_slab_one"
-            android:shadowColor="#841818"
-            android:text="Who's Playing?"
-            android:textColor="@color/secondary_theme"
-            android:textColorHighlight="#473C02"
-            android:textSize="34sp" />
-    </LinearLayout>
+        android:layout_margin="10dp"
+        android:backgroundTint="#FFD600"
+        android:fontFamily="@font/alfa_slab_one"
+        android:layout_gravity="center_horizontal"
+        android:shadowColor="#841818"
+        android:text="Who's Playing?"
+        android:textColor="@color/secondary_theme"
+        android:textColorHighlight="#473C02"
+        android:textSize="34sp" />
 
     <ListView
         android:id="@+id/listView"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
 
     <Button
         android:id="@+id/addProfile"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Profile" />
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="50dp"
+        android:backgroundTint="#FFAB00"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="Add Profile"
+        android:textColor="@color/secondary_theme" />
 
 </LinearLayout>

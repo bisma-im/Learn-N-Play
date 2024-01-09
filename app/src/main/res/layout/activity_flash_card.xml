@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         android:layout_weight="1.75"
         android:background="@color/white">
 
@@ -28,11 +28,15 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerHorizontal="true"
             android:text="Alphabet Flashcards"
+            android:fontFamily="@font/alfa_slab_one"
+            android:textColor="@color/secondary_theme"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -51,9 +55,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_weight="3.25"
         android:background="@color/white"
         android:gravity="center"
@@ -96,6 +100,8 @@
                         android:layout_height="48dp"
                         android:inputType="text"
                         android:gravity="right"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:textColor="@color/secondary_theme"
                         android:maxLength="1" />
 
                     <!-- TextView for the rest of the word -->
@@ -105,6 +111,8 @@
                         android:layout_height="wrap_content"
                         android:text="nt"
                         android:layout_marginRight="20dp"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:textColor="@color/secondary_theme"
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -136,6 +144,8 @@
                         android:layout_height="48dp"
                         android:inputType="text"
                         android:gravity="right"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:textColor="@color/secondary_theme"
                         android:maxLength="1" />
 
                     <!-- TextView for the rest of the word -->
@@ -145,6 +155,8 @@
                         android:layout_height="wrap_content"
                         android:text="pple"
                         android:layout_marginRight="20dp"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:textColor="@color/secondary_theme"
                         android:textSize="18sp"/>
                 </LinearLayout>
             </LinearLayout>
@@ -176,7 +188,11 @@
                     android:id="@+id/thirdObjEditText"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:gravity="right"/>
+                    android:inputType="text"
+                    android:gravity="right"
+                    android:fontFamily="@font/alfa_slab_one"
+                    android:textColor="@color/secondary_theme"
+                    android:maxLength="1"/>
 
                 <!-- TextView for the rest of the word -->
                 <TextView
@@ -184,8 +200,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="stronaut"
-                    android:layout_gravity="bottom"
                     android:layout_marginRight="20dp"
+                    android:fontFamily="@font/alfa_slab_one"
+                    android:textColor="@color/secondary_theme"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
@@ -194,11 +211,13 @@
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/secondary_theme"
+            android:backgroundTint="#FFAB00"
             android:layout_gravity="right"
-            android:textSize="15sp"
-            android:layout_margin="5dp"
-            android:text="next" />
+            android:textColor="@color/secondary_theme"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="next"
+            />
     </LinearLayout>
 </LinearLayout>
 

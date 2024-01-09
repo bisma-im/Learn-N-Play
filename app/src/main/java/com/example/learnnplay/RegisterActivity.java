@@ -28,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .getBoolean("isLoggedIn", false);
 
         if (isLoggedIn) {
-            startActivity(new Intent(RegisterActivity.this, HomeScreen.class));
+            startActivity(new Intent(RegisterActivity.this, ChildProfiles.class));
             finish();
             return;
         }

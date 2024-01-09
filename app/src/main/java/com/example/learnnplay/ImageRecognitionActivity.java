@@ -2,6 +2,7 @@ package com.example.learnnplay;
 
 import android.Manifest;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -61,6 +62,8 @@ public class ImageRecognitionActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(ImageRecognitionActivity.this, HomeScreen.class);
+                startActivity(intent);
                 finish();
             }
         });
