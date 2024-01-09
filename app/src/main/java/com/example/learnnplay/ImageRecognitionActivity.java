@@ -39,15 +39,13 @@ import java.io.IOException;
 import java.util.List;
 
 public class ImageRecognitionActivity extends AppCompatActivity {
-    private static final int RESULT_LOAD_IMAGE = 123;
-    public static final int IMAGE_CAPTURE_CODE = 654;
     private static final int PERMISSION_CODE = 321;
     private ActivityResultLauncher<String> mGetContent;
     private ActivityResultLauncher<Uri> mTakePicture;
     private Uri imageUri;
     ImageView image;
     TextView resultTv;
-    Button upload, camera;
+    Button upload, camera, back;
     ImageLabeler labeler;
 
     @Override
@@ -58,6 +56,15 @@ public class ImageRecognitionActivity extends AppCompatActivity {
         resultTv = findViewById(R.id.resultTextView);
         upload = findViewById(R.id.uploadButton);
         camera = findViewById(R.id.cameraButton);
+        back=findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         labeler = ImageLabeling.getClient(new ImageLabelerOptions.Builder()
                 .setConfidenceThreshold(0.7f) // Set your own threshold
                 .build());
@@ -120,9 +127,6 @@ public class ImageRecognitionActivity extends AppCompatActivity {
                     public void onSuccess(List<ImageLabel> labels) {
                         for (ImageLabel label : labels) {
                             String text = label.getText();
-                            float confidence = label.getConfidence();
-                            int index = label.getIndex();
-
                             resultTv.append(text+"\n");
 
                         }

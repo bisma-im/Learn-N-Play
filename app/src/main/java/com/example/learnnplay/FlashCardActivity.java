@@ -1,7 +1,6 @@
 package com.example.learnnplay;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -12,46 +11,54 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlashCardActivity extends AppCompatActivity {
-    private List<FlashCard> flashCards;
+    private List<FlashCardDTO> flashCards;
     private int currentFlashCardIndex = 0;
     private TextView textViewLetter;
     private ImageButton imageButtonFirst, imageButtonSecond, imageButtonThird;
     private EditText editTextFirst, editTextSecond, editTextThird;
     private TextView textViewFirst, textViewSecond, textViewThird;
     private Button nextButton, backButton;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flash_card);
+        db = FirebaseFirestore.getInstance();
 
         initializeViews();
-        initializeFlashCards();
-        loadFlashCard(currentFlashCardIndex);
+        fetchFlashCardsFromFirestore();
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Check for incorrect letter
-                FlashCard flashCard = flashCards.get(currentFlashCardIndex);
-                if((editTextFirst.getText().toString().trim().equals(flashCard.letter) ||
-                        editTextFirst.getText().toString().trim().equals(flashCard.letter.toLowerCase())) &&
-                        (editTextSecond.getText().toString().trim().equals(flashCard.letter) ||
-                        editTextSecond.getText().toString().trim().equals(flashCard.letter.toLowerCase())) &&
-                        (editTextThird.getText().toString().trim().equals(flashCard.letter) ||
-                        editTextThird.getText().toString().trim().equals(flashCard.letter.toLowerCase()))){
+                FlashCardDTO flashCard = flashCards.get(currentFlashCardIndex);
+                if((editTextFirst.getText().toString().trim().equals(flashCard.getLetter()) ||
+                        editTextFirst.getText().toString().trim().equals(flashCard.getLetter().toLowerCase())) &&
+                        (editTextSecond.getText().toString().trim().equals(flashCard.getLetter()) ||
+                        editTextSecond.getText().toString().trim().equals(flashCard.getLetter().toLowerCase())) &&
+                        (editTextThird.getText().toString().trim().equals(flashCard.getLetter()) ||
+                        editTextThird.getText().toString().trim().equals(flashCard.getLetter().toLowerCase()))){
 
                     // All fields are filled, proceed to the next flash card
                     currentFlashCardIndex++;
-                    if (currentFlashCardIndex >= flashCards.size()) {
-                        currentFlashCardIndex = 0; // Loop back to the first card
+
+                    if(currentFlashCardIndex > flashCards.size()-1){
+                        currentFlashCardIndex =0;
                     }
-                    loadFlashCard(currentFlashCardIndex);
+                    else{
+                        loadFlashCard(currentFlashCardIndex);
+                    }
                 }
                 // Check if any of the EditText fields are empty
                 else if (editTextFirst.getText().toString().trim().isEmpty() ||
@@ -76,16 +83,16 @@ public class FlashCardActivity extends AppCompatActivity {
     }
 
     private void loadFlashCard(int index) {
-        FlashCard flashCard = flashCards.get(index);
-        textViewLetter.setText(flashCard.letter);
+        FlashCardDTO flashCard = flashCards.get(index);
+        textViewLetter.setText(flashCard.getLetter());
 
-        imageButtonFirst.setImageResource(flashCard.images[0]);
-        imageButtonSecond.setImageResource(flashCard.images[1]);
-        imageButtonThird.setImageResource(flashCard.images[2]);
+        imageButtonFirst.setImageResource(getResourceIdByName(flashCard.getImageIdentifiers().get(0), "drawable"));
+        imageButtonSecond.setImageResource(getResourceIdByName(flashCard.getImageIdentifiers().get(1), "drawable"));
+        imageButtonThird.setImageResource(getResourceIdByName(flashCard.getImageIdentifiers().get(2), "drawable"));
 
-        textViewFirst.setText(flashCard.objectNames[0].substring(1));
-        textViewSecond.setText(flashCard.objectNames[1].substring(1));
-        textViewThird.setText(flashCard.objectNames[2].substring(1));
+        textViewFirst.setText(flashCard.getObjectNames().get(0).substring(1));
+        textViewSecond.setText(flashCard.getObjectNames().get(1).substring(1));
+        textViewThird.setText(flashCard.getObjectNames().get(2).substring(1));
 
         editTextFirst.setText("");
         editTextSecond.setText("");
@@ -95,11 +102,11 @@ public class FlashCardActivity extends AppCompatActivity {
         imageButtonSecond.setOnClickListener(null);
         imageButtonThird.setOnClickListener(null);
 
-        // Set up onClickListeners for each ImageButton to play the corresponding audio
-        setupAudioPlayer(imageButtonFirst, flashCard.audios[0]);
-        setupAudioPlayer(imageButtonSecond, flashCard.audios[1]);
-        setupAudioPlayer(imageButtonThird, flashCard.audios[2]);
-    }
+
+        setupAudioPlayer(imageButtonFirst, getResourceIdByName(flashCard.getAudioIdentifiers().get(0), "raw"));
+        setupAudioPlayer(imageButtonSecond, getResourceIdByName(flashCard.getAudioIdentifiers().get(1), "raw"));
+        setupAudioPlayer(imageButtonThird, getResourceIdByName(flashCard.getAudioIdentifiers().get(2), "raw"));
+}
 
     private void setupAudioPlayer(ImageButton imageButton, int audioResId) {
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -121,38 +128,38 @@ public class FlashCardActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void initializeFlashCards() {
-        flashCards = new ArrayList<>();
-
-        flashCards.add(new FlashCard(
-                "A",
-                new String[] {"Ant", "Apple", "Astronaut"},
-                new int[] {R.drawable.ant, R.drawable.apple, R.drawable.astronaut},
-                new int[] {R.raw.a_for_ant, R.raw.a_for_apple, R.raw.a_for_astronaut}
-        ));
-
-        flashCards.add(new FlashCard(
-                "B",
-                new String[] {"Ball", "Banana", "Butterfly"},
-                new int[] {R.drawable.ball, R.drawable.banana, R.drawable.butterfly},
-                new int[] {R.raw.b_for_ball, R.raw.b_for_banana, R.raw.b_for_butterfly}
-        ));
-
-        flashCards.add(new FlashCard(
-                "C",
-                new String[] {"Cake", "Cat", "Clock"},
-                new int[] {R.drawable.cake, R.drawable.cat, R.drawable.clock},
-                new int[] {R.raw.c_for_cake, R.raw.c_for_cat, R.raw.c_for_clock}
-        ));
-
-        flashCards.add(new FlashCard(
-                "D",
-                new String[] {"Doll", "Dog", "Doughnut"},
-                new int[] {R.drawable.doll, R.drawable.dog, R.drawable.doughnut},
-                new int[] {R.raw.d_for_doll, R.raw.d_for_dog, R.raw.d_for_doughnut}
-        ));
+    private void fetchFlashCardsFromFirestore() {
+        db.collection("flashcard")
+                .orderBy("letter")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            flashCards = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                FlashCardDTO flashCardDTO = document.toObject(FlashCardDTO.class);
+                                flashCards.add(flashCardDTO);
+                            }
+                            if (!flashCards.isEmpty()) {
+                                loadFlashCard(currentFlashCardIndex); // Load the first flashcard
+                            }
+                            if (!flashCards.isEmpty()) {
+                                loadFlashCard(currentFlashCardIndex);
+                            }
+                        } else {
+                            Log.w("FlashCardActivity", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
+
+
+
+    private int getResourceIdByName(String resourceName, String resourceType) {
+        return getResources().getIdentifier(resourceName, resourceType, getPackageName());
+    }
+
 
     private void initializeViews() {
         textViewLetter = findViewById(R.id.alphabet);
